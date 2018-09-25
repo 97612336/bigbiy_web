@@ -1,11 +1,11 @@
 package bigbiy_www
 
 import (
-	"net/http"
-	"bigbiy_web/util"
+	"bigbiy_web/config"
 	"bigbiy_web/models"
-		"bigbiy_web/config"
+	"bigbiy_web/util"
 	"html/template"
+	"net/http"
 )
 
 func Show_all_message(w http.ResponseWriter, r *http.Request) {
@@ -63,17 +63,21 @@ func Go_to_article_detail(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1024 * 1024 * 3)
 	if r.Method == "GET" {
 		article_id_str := util.Get_argument(r, "id", "")
-		sql_str := "select html from articles where id=?;"
+		sql_str := "select html,hot_word from articles where id=?;"
 		rows, err := util.DB.Query(sql_str, article_id_str)
 		util.CheckErr(err)
 		defer rows.Close()
 		var html_str string
+		var hot_word string
 		for rows.Next() {
-			err := rows.Scan(&html_str)
+			err := rows.Scan(&html_str, &hot_word)
 			util.CheckErr(err)
 		}
+		var data = make(map[string]interface{})
 		new_html_str := template.HTML(html_str)
+		data["html_str"] = new_html_str
+		data["hot_word"] = hot_word
 		template_path := config.Template_path + "detail.html"
-		util.Render_template(w, template_path, new_html_str)
+		util.Render_template(w, template_path, data)
 	}
 }

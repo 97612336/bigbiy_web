@@ -2,9 +2,10 @@ package util
 
 import (
 	"encoding/json"
+	"feidu/util"
 	"fmt"
-	"net/http"
 	"html/template"
+	"net/http"
 )
 
 //将类型转化为字符串json
@@ -19,8 +20,9 @@ func Get_json_string(m interface{}) string {
 }
 
 //将字符串json转化为类型
-func Json_to_object(json_str string, i interface{}){
-	json.Unmarshal([]byte(json_str), i)
+func Json_to_object(json_str string, i interface{}) {
+	err := json.Unmarshal([]byte(json_str), i)
+	util.CheckErr(err)
 }
 
 //在web中返回json字符串

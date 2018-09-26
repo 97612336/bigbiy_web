@@ -4,8 +4,8 @@ import (
 	"bigbiy_web/config"
 	"bigbiy_web/models"
 	"bigbiy_web/util"
-	"html/template"
 	"net/http"
+	"strings"
 )
 
 func Show_all_message(w http.ResponseWriter, r *http.Request) {
@@ -19,14 +19,14 @@ func Show_all_message(w http.ResponseWriter, r *http.Request) {
 		start_num_str := util.Int_to_string((page - 1) * page_size)
 		end_num_str := util.Int_to_string(page_size)
 		// 从数据库读取数据
-		sql_str := "select id,hot_word from articles order by id desc limit ?,?;"
+		sql_str := "select id,hot_word,title from articles order by id desc limit ?,?;"
 		rows, err := util.DB.Query(sql_str, start_num_str, end_num_str)
 		util.CheckErr(err)
 		defer rows.Close()
 		var articles []models.Article
 		for rows.Next() {
 			var one_article models.Article
-			err := rows.Scan(&one_article.Id, &one_article.Hot_word)
+			err := rows.Scan(&one_article.Id, &one_article.Hot_word, &one_article.Title)
 			util.CheckErr(err)
 			articles = append(articles, one_article)
 		}
@@ -63,20 +63,32 @@ func Go_to_article_detail(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1024 * 1024 * 3)
 	if r.Method == "GET" {
 		article_id_str := util.Get_argument(r, "id", "")
-		sql_str := "select html,hot_word from articles where id=?;"
+		sql_str := "select hot_word,title,info,content,imgs from articles where id=?;"
 		rows, err := util.DB.Query(sql_str, article_id_str)
 		util.CheckErr(err)
 		defer rows.Close()
-		var html_str string
 		var hot_word string
+		var title string
+		var info string
+		var content string
+		var imgs string
 		for rows.Next() {
-			err := rows.Scan(&html_str, &hot_word)
+			err := rows.Scan(&hot_word, &title, &info, &content, &imgs)
 			util.CheckErr(err)
 		}
 		var data = make(map[string]interface{})
-		new_html_str := template.HTML(html_str)
-		data["html_str"] = new_html_str
+		// 把值赋予给data
 		data["hot_word"] = hot_word
+		data["title"] = title
+		data["info"] = info
+		var content_list []string
+		new_content := strings.Replace(content, "'", "\"", -1)
+		util.Json_to_object(new_content, &content_list)
+		data["content_list"] = content_list
+		var img_list []string
+		new_imgs := strings.Replace(imgs, "'", "\"", -1)
+		util.Json_to_object(new_imgs, &img_list)
+		data["img_list"] = img_list
 		template_path := config.Template_path + "detail.html"
 		util.Render_template(w, template_path, data)
 	}

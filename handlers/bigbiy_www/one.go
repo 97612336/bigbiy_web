@@ -63,6 +63,8 @@ func Go_to_article_detail(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1024 * 1024 * 3)
 	if r.Method == "GET" {
 		article_id_str := util.Get_argument(r, "id", "")
+		n := util.Get_argument(r, "n", "1")
+		page := util.String_to_int(n)
 		sql_str := "select hot_word,title,info,content,imgs from articles where id=?;"
 		rows, err := util.DB.Query(sql_str, article_id_str)
 		util.CheckErr(err)
@@ -86,9 +88,14 @@ func Go_to_article_detail(w http.ResponseWriter, r *http.Request) {
 		util.Json_to_object(new_content, &content_list)
 		data["content_list"] = content_list
 		var img_list []string
-		new_imgs := strings.Replace(imgs, "'", "\"", -1)
-		util.Json_to_object(new_imgs, &img_list)
-		data["img_list"] = img_list
+		if "[]" != imgs {
+			new_imgs := strings.Replace(imgs, "'", "\"", -1)
+			util.Json_to_object(new_imgs, &img_list)
+			data["img_list"] = img_list
+		} else {
+			data["img_list"] = []string{"#", "#"}
+		}
+		data["page"] = page
 		template_path := config.Template_path + "detail.html"
 		util.Render_template(w, template_path, data)
 	}

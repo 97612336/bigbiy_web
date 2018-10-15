@@ -39,7 +39,7 @@ func Show_all_message(w http.ResponseWriter, r *http.Request) {
 		data["page_num_list"] = page_num_list
 		data["articles"] = articles
 		data["current_page"] = page
-		template_path := config.Template_path + "index.html"
+		template_path := config.Template_path + "index_v2.html"
 		util.Render_template(w, template_path, data)
 	}
 }

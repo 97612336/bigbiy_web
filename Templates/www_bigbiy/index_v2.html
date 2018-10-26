@@ -1,14 +1,15 @@
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="热点事件">
     <meta name="description" content="热点事件">
-    <meta name="google-site-verification" content="sO9w86v_cAlWn5iS9clvGeI3GT2iOAR8nWduRwHI4mw"/>
-    <meta name="baidu-site-verification" content="1vwkO2wUAH"/>
+    <meta name="google-site-verification" content="sO9w86v_cAlWn5iS9clvGeI3GT2iOAR8nWduRwHI4mw" />
+    <meta name="baidu-site-verification" content="1vwkO2wUAH" />
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>大网</title>
+    <title>非杜网</title>
     <!--适配移动端-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- Bootstrap -->
@@ -179,91 +180,98 @@
 
 <body>
 
-<div class="container">
-    <!--导航条部分-->
-    <nav class="navbar navbar-default" style="border-radius: 0px;">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="">大网</a>
-            </div>
+    <div class="container">
+        <!--导航条部分-->
+        <nav class="navbar navbar-default" style="border-radius: 0px;">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">
+                        非杜
+                    </a>
+                </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="">小说</a></li>
-                </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="navbar-brand">
+                            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1275056764'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1275056764%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+                        </li>
+                        <li>
+                            <a href="/novel_v2">小说</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!--搜索模块-->
-    <div class="beijing">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 text-center ">
-                <img style='width:50%;height:50%;'
-                     src='https://i.loli.net/2018/10/15/5bc438076c293.png'/>
+        </nav>
+        <!--搜索模块-->
+        <div class="beijing">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 text-center ">
+                    <img style='width:50%;height:50%;' src='https://i.loli.net/2018/10/15/5bc438076c293.png' />
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 text-center">
-                <div id="search">
-                    <input type="search" id="neirong" class="big1" onKeyPress="enterp()">
-                    <select id="xuanze" class="big2">
-                        <option value="1">百度搜索</option>
-                        <option value="7">网盘搜索</option>
-                        <option value="2">淘宝搜索</option>
-                        <option value="3">京东搜索</option>
-                        <option value="4">必应搜索</option>
-                        <option value="5">知乎搜索</option>
-                        <option value="6">微信搜索</option>
-                    </select>
-                    <input type="button" value="搜索一下" onClick="ifun()" class="big3">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 text-center">
+                    <div id="search">
+                        <input type="search" id="neirong" class="big1" onKeyPress="enterp()">
+                        <select id="xuanze" class="big2">
+                            <option value="1">百度搜索</option>
+                            <option value="7">网盘搜索</option>
+                            <option value="2">淘宝搜索</option>
+                            <option value="3">京东搜索</option>
+                            <option value="4">必应搜索</option>
+                            <option value="5">知乎搜索</option>
+                            <option value="6">微信搜索</option>
+                        </select>
+                        <input type="button" value="搜索一下" onClick="ifun()" class="big3">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!--搜索的点击事件-->
-<script>
-    function ifun() {
-        var neirong = document.getElementById("neirong").value;
-        var xuanze = document.getElementById("xuanze").options[document.getElementById("xuanze").selectedIndex].value;
-        if (xuanze == 1) {
-            window.open("http://www.baidu.com/baidu?tn=baidu&word=" + neirong);
+    <!--搜索的点击事件-->
+    <script>
+        function ifun() {
+            var neirong = document.getElementById("neirong").value;
+            var xuanze = document.getElementById("xuanze").options[document.getElementById("xuanze").selectedIndex].value;
+            if (xuanze == 1) {
+                window.open("http://www.baidu.com/baidu?tn=baidu&word=" + neirong);
+            }
+            else if (xuanze == 2) {
+                window.open("https://s.taobao.com/search?q=" + neirong);
+            }
+            else if (xuanze == 3) {
+                window.open("http://search.jd.com/Search?enc=utf-8&keyword=" + neirong);
+            }
+            else if (xuanze == 4) {
+                window.open("http://cn.bing.com/search?q=" + neirong);
+            }
+            else if (xuanze == 5) {
+                window.open("http://zhihu.sogou.com/zhihu?query=" + neirong);
+            }
+            else if (xuanze == 6) {
+                window.open("http://weixin.sogou.com/weixin?type=2&query=" + neirong);
+            }
+            else if (xuanze == 7) {
+                window.open("https://www.panc.cc/s/" + neirong);
+            }
         }
-        else if (xuanze == 2) {
-            window.open("https://s.taobao.com/search?q=" + neirong);
-        }
-        else if (xuanze == 3) {
-            window.open("http://search.jd.com/Search?enc=utf-8&keyword=" + neirong);
-        }
-        else if (xuanze == 4) {
-            window.open("http://cn.bing.com/search?q=" + neirong);
-        }
-        else if (xuanze == 5) {
-            window.open("http://zhihu.sogou.com/zhihu?query=" + neirong);
-        }
-        else if (xuanze == 6) {
-            window.open("http://weixin.sogou.com/weixin?type=2&query=" + neirong);
-        }
-        else if (xuanze == 7) {
-            window.open("https://www.panc.cc/s/" + neirong);
-        }
-    }
 
-    function enterp() {
-        if (event.keyCode == 13) {
-            ifun();
+        function enterp() {
+            if (event.keyCode == 13) {
+                ifun();
+            }
         }
-    }
-</script>
+    </script>
 </body>
+
 </html>

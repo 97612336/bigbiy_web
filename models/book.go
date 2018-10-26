@@ -30,6 +30,8 @@ type Banner_novel struct {
 	Book_id int    `json:"book_id"`
 	Name    string `json:"name"`
 	Author  string `json:"author"`
+	Img     string `json:"img"`
+	Desc    string `json:"desc"`
 }
 
 //histroy模型
@@ -64,7 +66,7 @@ type Category_book struct {
 }
 
 type One_chapter struct {
-	ChapterId int `json:"chapterId"`
-	ChapterName string `json:"chapterName"`
+	ChapterId      int      `json:"chapterId"`
+	ChapterName    string   `json:"chapterName"`
 	ChapterContent []string `json:"chapterContent"`
 }

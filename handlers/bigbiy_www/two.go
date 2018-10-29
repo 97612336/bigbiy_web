@@ -259,11 +259,17 @@ func Has_next_or_pervious_chapter(current_chapter_id string, book_id string, kin
 		}
 
 	} else {
-		sql_str := "select count(1),id from chapter where id<?  and book_id=? order by id desc limit 1;"
+		sql_str := "select count(1) from chapter where id<?  and book_id=? limit 1;"
 		rows, err := util.DB.Query(sql_str, current_chapter_id, book_id)
 		util.CheckErr(err)
 		for rows.Next() {
-			rows.Scan(&num, &id)
+			rows.Scan(&num)
+		}
+		sql_str2 := "select id from chapter where id<? and book_id=? order by id DESC limit 1;"
+		rows2, err2 := util.DB.Query(sql_str2, current_chapter_id, book_id)
+		util.CheckErr(err2)
+		for rows2.Next() {
+			rows2.Scan(&id)
 		}
 	}
 	if num > 0 {

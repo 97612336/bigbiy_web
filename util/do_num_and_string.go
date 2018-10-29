@@ -48,3 +48,18 @@ func Int_to_string(one_int int) string {
 	one_string := strconv.Itoa(one_int)
 	return one_string
 }
+
+//得到字符串的长度
+func String_length(one_str string) int {
+	nameRune := []rune(one_str)
+	return len(nameRune)
+}
+
+//截取固定长度的字符串
+func Splite_string(one_str string, lenght int) string {
+	nameRune := []rune(one_str)
+	res := string(nameRune[0:lenght])
+	return res
+}
+
+

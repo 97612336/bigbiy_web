@@ -70,3 +70,8 @@ type One_chapter struct {
 	ChapterName    string   `json:"chapterName"`
 	ChapterContent []string `json:"chapterContent"`
 }
+
+type Chapter_name struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}

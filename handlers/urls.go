@@ -8,4 +8,7 @@ import (
 func MyUrls() {
 	http.HandleFunc("/", bigbiy_www.Index_v2)
 	http.HandleFunc("/novel_v2", bigbiy_www.Nvl_v2)
+	http.HandleFunc("/novel_detail_v2", bigbiy_www.Nvl_detail)
+	http.HandleFunc("/chapter_detail_v2", bigbiy_www.Chapter_detail)
+	http.HandleFunc("/search_love_nvl_v2",bigbiy_www.Search_love_nvl)
 }

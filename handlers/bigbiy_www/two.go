@@ -4,10 +4,10 @@ import (
 	"bigbiy_web/config"
 	"bigbiy_web/models"
 	"bigbiy_web/util"
+	"database/sql"
+	"fmt"
 	"net/http"
 	"strconv"
-	"fmt"
-	"database/sql"
 )
 
 //搜索喜欢的小说
@@ -283,6 +283,9 @@ func Has_next_or_pervious_chapter(current_chapter_id string, book_id string, kin
 func Has_next_or_per_page_book(books []models.Banner_novel, search_words string, kind int) int {
 	var sql_str string
 	new_search_words := "'%" + search_words + "%'"
+	if len(books) < 1 {
+		return 0
+	}
 	first_id := books[0].Book_id
 	last_id := books[len(books)-1].Book_id
 	if search_words == "0" {

@@ -4,6 +4,7 @@ import (
 	"bigbiy_web/config"
 	"bigbiy_web/models"
 	"bigbiy_web/util"
+	"math"
 	"net/http"
 	"strings"
 )
@@ -31,7 +32,7 @@ func Show_all_message(w http.ResponseWriter, r *http.Request) {
 			articles = append(articles, one_article)
 		}
 		count_num := Get_all_page_num()
-		page_num := count_num / page_size
+		page_num := int(math.Ceil(float64(count_num / page_size)))
 		var page_num_list []int
 		for i := 1; i <= page_num; i++ {
 			page_num_list = append(page_num_list, i)

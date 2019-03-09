@@ -4,40 +4,51 @@ import (
 	"bigbiy_web/config"
 	"bigbiy_web/models"
 	"bigbiy_web/util"
-	"math"
 	"net/http"
 	"strings"
 )
 
-func Show_all_message(w http.ResponseWriter, r *http.Request) {
+func New_index_page(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1024 * 1024 * 3)
 	if r.Method == "GET" {
 		var data = make(map[string]interface{})
 		// 获取页数
 		n := util.Get_argument(r, "n", "1")
 		page := util.String_to_int(n)
-		var page_size = 5
+		var page_size = 6
 		start_num_str := util.Int_to_string((page - 1) * page_size)
 		end_num_str := util.Int_to_string(page_size)
 		// 从数据库读取数据
-		sql_str := "select id,hot_word,title from articles order by id desc limit ?,?;"
+		sql_str := "select id,hot_word,title,info,imgs from articles order by id desc limit ?,?;"
 		rows, err := util.DB.Query(sql_str, start_num_str, end_num_str)
 		util.CheckErr(err)
 		defer rows.Close()
 		var articles []models.Article
+		//遍历数据体
 		for rows.Next() {
+			//定义文章实体类
 			var one_article models.Article
-			err := rows.Scan(&one_article.Id, &one_article.Hot_word, &one_article.Title)
+			// 定义图片字符串列表
+			var imgs string
+			err := rows.Scan(&one_article.Id, &one_article.Hot_word, &one_article.Title, &one_article.Info, &imgs)
+			//进行判断，然后获取第一张图片
+			if "[]" != imgs {
+				var img_list []string
+				new_imgs := strings.Replace(imgs, "'", "\"", -1)
+				util.Json_to_object(new_imgs, &img_list)
+				one_article.Img = img_list[0]
+			} else {
+				one_article.Img = "#"
+			}
 			util.CheckErr(err)
 			articles = append(articles, one_article)
 		}
+		//获取页码数
+		//总记录数
 		count_num := Get_all_page_num()
-		page_num := int(math.Ceil(float64(count_num) / float64(page_size)))
-		var page_num_list []int
-		for i := 1; i <= page_num; i++ {
-			page_num_list = append(page_num_list, i)
-		}
-		data["page_num_list"] = page_num_list
+		page_nums := Paginator(page, page_size, count_num)
+		//进行数据传输，发送给HTML
+		data["paginator"] = page_nums
 		data["articles"] = articles
 		data["current_page"] = page
 		template_path := config.Template_path + "index.html"
@@ -45,24 +56,10 @@ func Show_all_message(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// 得到文章总数量的方法
-func Get_all_page_num() int {
-	sql_str := "select count(1) from articles;"
-	rows, err := util.DB.Query(sql_str)
-	util.CheckErr(err)
-	defer rows.Close()
-	var num int
-	for rows.Next() {
-		err := rows.Scan(&num)
-		util.CheckErr(err)
-	}
-	return num
-}
-
-// 点击进入文章详情页的方法
-func Go_to_article_detail(w http.ResponseWriter, r *http.Request) {
+func Aricle_detail(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1024 * 1024 * 3)
 	if r.Method == "GET" {
+		var data = make(map[string]interface{})
 		article_id_str := util.Get_argument(r, "id", "")
 		n := util.Get_argument(r, "n", "1")
 		page := util.String_to_int(n)
@@ -79,13 +76,13 @@ func Go_to_article_detail(w http.ResponseWriter, r *http.Request) {
 			err := rows.Scan(&hot_word, &title, &info, &content, &imgs)
 			util.CheckErr(err)
 		}
-		var data = make(map[string]interface{})
 		// 把值赋予给data
 		data["hot_word"] = hot_word
 		data["title"] = title
 		data["info"] = info
 		var content_list []string
 		new_content := strings.Replace(content, "'", "\"", -1)
+		//打印输出
 		util.Json_to_object(new_content, &content_list)
 		data["content_list"] = content_list
 		var img_list []string

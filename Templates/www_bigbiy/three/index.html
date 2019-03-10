@@ -43,7 +43,7 @@
         <article>
             <div class="post-item-card">
                 <div class="post-item-card-body">
-                    <a href="/detail?n={{$.current_page}}$id={{$v.Id}}" class="item-thumb">
+                    <a href="/detail?n={{$.current_page}}&id={{$v.Id}}" class="item-thumb">
                         <figure class="thumbnail"
                                 style="background-image:url({{$v.Img}});">
                         </figure>
@@ -66,11 +66,17 @@
 
     <!--分页部分-->
     <ol class="page-navi">
+        <li>
+            <a href="/?n={{.paginator.firstpage}}">«</a>
+        </li>
         {{range $index,$page := .paginator.pages}}
         <li {{if eq $.paginator.currpage $page }}class="current" {{end}}>
             <a href="/?n={{$page}}" class="page-numbers">{{$page}}</a>
         </li>
         {{end}}
+        <li>
+            <a href="/?n={{.paginator.lastpage}}">»</a>
+        </li>
     </ol>
 </main>
 

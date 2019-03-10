@@ -44,14 +44,6 @@
             border-radius: 10px;
         }
     </style>
-    <script>
-        function enterp() {
-            if (event.keyCode == 13) {
-                var words = $("#search_input").val();
-                $(location).prop('href', '/novel_v2?search_words=' + words);
-            }
-        }
-    </script>
 
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -95,65 +87,19 @@
             </div>
         </nav>
         <div class="beijing">
-            <!-- 搜索框模块 -->
-            <div class="col-xs-4">
-                <input type="text" class="form-control" id="search_input" placeholder="搜索你喜欢的小说" onKeyPress="enterp()">
-            </div>
-            <br>
-            <hr>
-            <!-- 推荐小说模块 -->
+            <img src="{{.book_info.Img}}" alt="" style="width:110px;height:150px;">
             <blockquote>
-                <h3>推荐小说</h3>
+                <p>{{.book_info.Name}}</p>
+                <footer>{{.book_info.Desc}}</footer>
             </blockquote>
             <hr>
-            <div>
-                {{range .banner}}
-                <div class="media">
-                    <div class="media-left">
-                        <a href="/novel_detail_v2?book_id={{.Book_id}}">
-                            <img class="media-object" src="{{.Img}}" alt="..." style="width:100px;height:150px;">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="/novel_detail_v2?book_id={{.Book_id}}">{{.Name}}</a></h4>
-                        <a href="/novel_detail_v2?book_id={{.Book_id}}">{{.Desc}}</a>
-                    </div>
-                </div>
-                <hr>
-                {{ end }}
-            </div>
-            <!-- 所有小说模块 -->
-            <blockquote>
-                <h3>所有小说</h3>
-            </blockquote>
-            <hr>
-            <div>
-                {{range .books}}
-                <div class="media">
-                    <div class="media-left">
-                        <a href="/novel_detail_v2?book_id={{.Book_id}}">
-                            <img class="media-object" src="{{.Img}}" alt="..." style="width:100px;height:150px;">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="/novel_detail_v2?book_id={{.Book_id}}">{{.Name}}</a></h4>
-                        <a href="/novel_detail_v2?book_id={{.Book_id}}">{{.Desc}}</a>
-                    </div>
-                </div>
-                <hr>
-                {{ end }}
+            {{$book_id:=.book_info.Book_id}}
+            <div class="row">
+                {{range .chapters}}
+                <div class="col-md-3" style="margin-bottom:20px;"><a href="/chapter_detail_v2?chapter_id={{.Id}}&book_id={{$book_id}}">{{.Name}}</a></div>
+                {{end}}
             </div>
         </div>
-        <!-- 分页模块 -->
-        <a href="/novel_v2?last_book_id={{.last_book_id}}&first_book_id={{.first_book_id}}&kind=0&search_words={{.search_words}}"
-            type="button" class="btn btn-default {{if eq .first_book_id 3}}disabled{{end}} {{if eq .has_per 0}}disabled{{end}}">
-            上一页
-        </a>
-        <a href="/novel_v2?last_book_id={{.last_book_id}}&first_book_id={{.first_book_id}}&kind=1&search_words={{.search_words}}"
-            type="button" class="btn btn-default {{if eq .last_book_id 17340}}disabled{{end}} {{if eq .has_next 0}}disabled{{end}}">
-            下一页
-        </a>
-        <hr>
     </div>
 </body>
 

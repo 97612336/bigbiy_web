@@ -101,7 +101,7 @@ func Aricle_detail(w http.ResponseWriter, r *http.Request) {
 		//获取该记录是倒数第几个
 		article_id := util.String_to_int(article_id_str)
 		reci_num := count_num - article_id
-		if reci_num == 0 {
+		if reci_num <= 0 {
 			data["page"] = 1
 		} else {
 			page := int(math.Ceil(float64(reci_num) / float64(page_size)))

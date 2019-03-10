@@ -17,6 +17,15 @@ func Paginator(page, prepage int, nums int) map[string]interface{} {
 	}
 	var pages []int
 	switch {
+	case page==3:
+		start := page - 3 + 1
+		pages = make([]int, 5)
+		firstpage = page - 3
+		for i, _ := range pages {
+			pages[i] = start + i
+		}
+		firstpage = page - 1
+		lastpage = page + 1
 	case page >= totalpages-5 && totalpages > 5: //最后5页
 		start := totalpages - 5 + 1
 		firstpage = page - 1

@@ -15,7 +15,7 @@ func New_index_page(w http.ResponseWriter, r *http.Request) {
 		// 获取页数
 		n := util.Get_argument(r, "n", "1")
 		page := util.String_to_int(n)
-		var page_size = 6
+		var page_size = 12
 		start_num_str := util.Int_to_string((page - 1) * page_size)
 		end_num_str := util.Int_to_string(page_size)
 		// 从数据库读取数据

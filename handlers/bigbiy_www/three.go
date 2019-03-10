@@ -4,6 +4,7 @@ import (
 	"bigbiy_web/config"
 	"bigbiy_web/models"
 	"bigbiy_web/util"
+	"math"
 	"net/http"
 	"strings"
 )
@@ -60,9 +61,9 @@ func Aricle_detail(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1024 * 1024 * 3)
 	if r.Method == "GET" {
 		var data = make(map[string]interface{})
-		article_id_str := util.Get_argument(r, "id", "")
-		n := util.Get_argument(r, "n", "1")
-		page := util.String_to_int(n)
+		article_id_str := util.Get_argument(r, "article", "")
+		//n := util.Get_argument(r, "n", "1")
+		//page := util.String_to_int(n)
 		sql_str := "select hot_word,title,info,content,imgs from articles where id=?;"
 		rows, err := util.DB.Query(sql_str, article_id_str)
 		util.CheckErr(err)
@@ -93,6 +94,14 @@ func Aricle_detail(w http.ResponseWriter, r *http.Request) {
 		} else {
 			data["img_list"] = []string{"#", "#"}
 		}
+		//根据id推算是第几页
+		//总记录数
+		count_num := Get_all_page_num()
+		page_size := 12
+		//获取该记录是倒数第几个
+		article_id := util.String_to_int(article_id_str)
+		reci_num := count_num - article_id
+		page := int(math.Ceil(float64(reci_num) / float64(page_size)))
 		data["page"] = page
 		template_path := config.Template_path + "detail.html"
 		util.Render_template(w, template_path, data)
